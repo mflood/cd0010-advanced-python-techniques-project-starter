@@ -75,16 +75,24 @@ class NearEarthObject:
         # TODO: Use self.designation and self.name to build a fullname for this object.
         return_val = self.designation.upper()
         if self.name:
-            return_val += self.name.title()
+            return_val += " (" + self.name.title() +")"
 
         return return_val
 
     def __str__(self):
-        """Return `str(self)`."""
+        """Return `str(self)`.
+
+        e.g. NEO 433 (Eros) has a diameter of 16.840 km and is not potentially hazardous.
+        """
         # TODO: Use this object's attributes to return a human-readable string representation.
         # The project instructions include one possibility. Peek at the __repr__
         # method for examples of advanced string formatting.
-        return f"A NearEarthObject ..."
+        is_or_is_not_map = {
+            True: "is",
+            False: "is not",
+        }
+        is_or_is_not = is_or_is_not_map[self.hazardous]
+        return f"{self.fullname} has a diameter of {self.diameter:.2f} km and {is_or_is_not} potentially hazardous"
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
@@ -146,7 +154,11 @@ class CloseApproach:
 
         e.g. "On 2021-08-21 15:10, '2016 AJ193' approaches Earth at a distance of 0.02 au and a velocity of 26.17 km/s."
         """
-        return f"On {self.time_str}, '{self._designation}' approaches Earth at a distance of {self.distance} au and a velocity of {self.velocity} km/s."
+        neo_name = self._designation
+        if self.neo:
+            neo_name = self.neo.full_name
+
+        return f"On {self.time_str}, '{neo_name}' approaches Earth at a distance of {self.distance:.2f} au and a velocity of {self.velocity:.2f} km/s."
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
