@@ -16,16 +16,26 @@ import csv
 import json
 
 from models import NearEarthObject, CloseApproach
+from typing import List
 
-
-def load_neos(neo_csv_path):
+def load_neos(neo_csv_path: str) -> List[NearEarthObject]:
     """Read near-Earth object information from a CSV file.
 
     :param neo_csv_path: A path to a CSV file containing data about near-Earth objects.
     :return: A collection of `NearEarthObject`s.
     """
-    # TODO: Load NEO data from the given CSV file.
-    return ()
+    with open (neo_csv_path, "r", encoding='utf-8') as handle:
+        dict_reader = csv.DictReader(handle)
+        neo_list = []
+        for item in dict_reader:
+            neo = NearEarthObject(
+                designation=item['pdes'],
+                name=item['name'],
+                diameter=item['diameter'],
+                hazardous=item['pha'],
+        )
+            neo_list.append(neo)
+    return neo_list
 
 
 def load_approaches(cad_json_path):
@@ -36,3 +46,12 @@ def load_approaches(cad_json_path):
     """
     # TODO: Load close approach data from the given JSON file.
     return ()
+
+
+
+
+if __name__ == "__main__":
+    neo_list = load_neos("data/neos.csv")
+    print(neo_list[0])
+    print(repr(neo_list[0]))
+
