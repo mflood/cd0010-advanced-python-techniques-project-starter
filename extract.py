@@ -72,6 +72,8 @@ if __name__ == "__main__":
     neo_list = load_neos("data/neos.csv")
     print(neo_list[0])
     print(repr(neo_list[0]))
+    print(str(neo_list[0]))
 
     approach_list = load_approaches("data/cad.json")
     print(repr(approach_list[0]))
+    print(str(approach_list[0]))
