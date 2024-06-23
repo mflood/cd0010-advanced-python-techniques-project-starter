@@ -45,7 +45,25 @@ def load_approaches(cad_json_path):
     :return: A collection of `CloseApproach`es.
     """
     # TODO: Load close approach data from the given JSON file.
-    return ()
+        
+    approach_list = []
+    with open(cad_json_path, "r", encoding="utf-8") as handle:
+        cad_object = json.load(handle)
+        fields = cad_object['fields']
+        data = cad_object['data']
+        for item in data:
+            item_dict = dict(zip(fields, item))
+            # {'des': '170903', 'orbit_id': '105', 'jd': '2415020.507669610', 'cd': '1900-Jan-01 00:11', 
+            # 'dist': '0.0921795123769547', 'dist_min': '0.0912006569517418', 'dist_max': '0.0931589328621254', 
+            # 'v_rel': '16.7523040362574', 'v_inf': '16.7505784933163', 't_sigma_f': '01:00', 'h': '18.1'}
+            close_approach = CloseApproach(
+                designation = item_dict['des'],
+                time = item_dict['cd'],
+                distance = item_dict['dist'],
+                velocity = item_dict['v_rel'],
+            )
+            approach_list.append(close_approach)
+    return approach_list
 
 
 
@@ -55,3 +73,5 @@ if __name__ == "__main__":
     print(neo_list[0])
     print(repr(neo_list[0]))
 
+    approach_list = load_approaches("data/cad.json")
+    print(repr(approach_list[0]))
