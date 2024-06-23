@@ -17,8 +17,9 @@ quirks of the data set, such as missing names and unknown diameters.
 
 You'll edit this file in Task 1.
 """
-from helpers import cd_to_datetime, datetime_to_str
 from typing import Optional
+
+from helpers import cd_to_datetime, datetime_to_str
 
 
 class NearEarthObject:
@@ -33,6 +34,7 @@ class NearEarthObject:
     initialized to an empty collection, but eventually populated in the
     `NEODatabase` constructor.
     """
+
     def __init__(self, designation: str, name: str, diameter: str, hazardous: str):
         """Create a new `NearEarthObject`.
 
@@ -52,7 +54,7 @@ class NearEarthObject:
         try:
             diameter = float(diameter)
         except ValueError:
-            diameter = float('nan')
+            diameter = float("nan")
 
         hazardous = bool(hazardous)
 
@@ -75,7 +77,7 @@ class NearEarthObject:
         # TODO: Use self.designation and self.name to build a fullname for this object.
         return_val = self.designation.upper()
         if self.name:
-            return_val += " (" + self.name.title() +")"
+            return_val += " (" + self.name.title() + ")"
 
         return return_val
 
@@ -96,8 +98,10 @@ class NearEarthObject:
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
-        return f"NearEarthObject(designation={self.designation!r}, name={self.name!r}, " \
-               f"diameter={self.diameter:.3f}, hazardous={self.hazardous!r})"
+        return (
+            f"NearEarthObject(designation={self.designation!r}, name={self.name!r}, "
+            f"diameter={self.diameter:.3f}, hazardous={self.hazardous!r})"
+        )
 
 
 class CloseApproach:
@@ -113,6 +117,7 @@ class CloseApproach:
     private attribute, but the referenced NEO is eventually replaced in the
     `NEODatabase` constructor.
     """
+
     def __init__(self, designation, time, distance: str, velocity: str):
         """Create a new `CloseApproach`.
 
@@ -125,7 +130,7 @@ class CloseApproach:
         # You should coerce these values to their appropriate data type and handle any edge cases.
         # The `cd_to_datetime` function will be useful.
         self._designation = designation.strip()
-        self.time = cd_to_datetime(time) 
+        self.time = cd_to_datetime(time)
         self.distance = float(distance)
         self.velocity = float(velocity)
 
@@ -162,5 +167,7 @@ class CloseApproach:
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
-        return f"CloseApproach(time={self.time_str!r}, distance={self.distance:.2f}, " \
-               f"velocity={self.velocity:.2f}, neo={self.neo!r})"
+        return (
+            f"CloseApproach(time={self.time_str!r}, distance={self.distance:.2f}, "
+            f"velocity={self.velocity:.2f}, neo={self.neo!r})"
+        )
