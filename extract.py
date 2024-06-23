@@ -39,21 +39,26 @@ def load_neos(neo_csv_path: str) -> List[NearEarthObject]:
     return neo_list
 
 
-def load_approaches(cad_json_path):
+def load_approaches(cad_json_path) -> List[CloseApproach]:
     """Read close approach data from a JSON file.
 
     :param cad_json_path: A path to a JSON file containing data about close approaches.
     :return: A collection of `CloseApproach`es.
     """
-    # TODO: Load close approach data from the given JSON file.
 
     approach_list = []
     with open(cad_json_path, "r", encoding="utf-8") as handle:
         cad_object = json.load(handle)
+        # fields contains the ordered field names of the data items
         fields = cad_object["fields"]
+
+        # data is a list of values for each approach, in the
+        # same order as fields
         data = cad_object["data"]
         for item in data:
             item_dict = dict(zip(fields, item))
+
+            # example item_dict
             # {'des': '170903', 'orbit_id': '105', 'jd': '2415020.507669610', 'cd': '1900-Jan-01 00:11',
             # 'dist': '0.0921795123769547', 'dist_min': '0.0912006569517418', 'dist_max': '0.0931589328621254',
             # 'v_rel': '16.7523040362574', 'v_inf': '16.7505784933163', 't_sigma_f': '01:00', 'h': '18.1'}
@@ -64,6 +69,7 @@ def load_approaches(cad_json_path):
                 velocity=item_dict["v_rel"],
             )
             approach_list.append(close_approach)
+
     return approach_list
 
 
